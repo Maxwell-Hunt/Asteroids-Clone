@@ -30,6 +30,17 @@ class Entity:
             top = min(point[1], top)
         return (top, right, bottom, left)
 
+    def screen_wrap(self):
+        top, right, bottom, left = self.get_bounds()
+        if left > SCREEN_WIDTH:
+            self.position.x = -right + self.position.x
+        if top > SCREEN_HEIGHT:
+            self.position.y = -bottom + self.position.y
+        if right < 0:
+            self.position.x = SCREEN_WIDTH + self.position.x - left
+        if bottom < 0:
+            self.position.y = SCREEN_HEIGHT + self.position.y - top
+
     def update(self, delta_time):
         pass
 
@@ -59,16 +70,7 @@ class Player(Entity):
         if pressed[pygame.K_LEFT]:
             self.rotation -= 0.5 * delta_time
 
-    def screen_wrap(self):
-        top, right, bottom, left = self.get_bounds()
-        if left > SCREEN_WIDTH:
-            self.position.x = -right + self.position.x
-        if top > SCREEN_HEIGHT:
-            self.position.y = -bottom + self.position.y
-        if right < 0:
-            self.position.x = SCREEN_WIDTH + self.position.x - left
-        if bottom < 0:
-            self.position.y = SCREEN_HEIGHT + self.position.y - top
+    
 
 
     def update(self, delta_time : float):
@@ -77,5 +79,26 @@ class Player(Entity):
             self.velocity = self.velocity.normalize()
             self.velocity *= self.max_speed
 
+        self.position += self.velocity * delta_time
+        self.screen_wrap()
+
+
+class Asteroid(Entity):
+
+    speed = 0.25
+    radius_variation = 0.4
+
+    def __init__(self, position_x : float, position_y : float, radius : float):
+        super().__init__(position_x, position_y)
+        self.velocity = pygame.Vector2(random() * 2 - 1, random() * 2 - 1).normalize() * self.speed
+        self.num_sides = randint(7, 12)
+        self.radius = radius
+        self.points = []
+        for i in range(self.num_sides):
+            angle = i * (360 / self.num_sides)
+            rv = random() * self.radius_variation * 2 - self.radius_variation
+            self.points.append(pygame.Vector2(cos(radians(angle)), sin(radians(angle))) * radius * (1 + rv))
+            
+    def update(self, delta_time : float):
         self.position += self.velocity * delta_time
         self.screen_wrap()

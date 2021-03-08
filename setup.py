@@ -1,5 +1,6 @@
 import pygame
 from math import sin, cos, radians, inf
+from random import random, randint
 
 pygame.init()
 pygame.font.init()
