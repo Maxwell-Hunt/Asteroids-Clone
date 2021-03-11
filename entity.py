@@ -47,3 +47,37 @@ class Entity:
     def draw(self, screen : pygame.Surface):
         transformed_points = self.get_transformed_points()
         pygame.draw.polygon(screen, self.colour, transformed_points, 3)
+
+    def check_collision(self, other) -> bool:
+        points = self.get_transformed_points()
+        other_points = other.get_transformed_points()
+        axes = []
+        for vertices in (points, other_points):
+            for i in range(len(vertices)):
+                point1 = pygame.Vector2(vertices[i][0], vertices[i][1])
+                point2 = pygame.Vector2(vertices[i-1][0], vertices[i-1][1])
+
+                edge = point2 - point1
+                normal = pygame.Vector2(-edge.y, edge.x).normalize()
+                axes.append(normal)
+
+        for axis in axes:
+            self_max = -inf
+            self_min = inf
+            other_max = -inf
+            other_min = inf
+            for point in points:
+                p = axis.dot(point)
+                self_max = max(p, self_max)
+                self_min = min(p, self_min)
+            for point in other_points:
+                p = axis.dot(point)
+                other_max = max(p, other_max)
+                other_min = min(p, other_min)
+
+            if not (self_max > other_min and self_min < other_max):
+                break
+        else:
+            return True
+                
+        return False

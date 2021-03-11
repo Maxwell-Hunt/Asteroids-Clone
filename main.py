@@ -18,14 +18,20 @@ while is_running:
 
     player.update(delta_time)
     player.draw(screen)
-    if player.check_collision(asteroids):
-        player.colour = (255, 0, 0)
+    for asteroid in asteroids:
+        if player.check_collision(asteroid):
+            player.colour = (255, 0, 0)
+            break
     else:
         player.colour = (255, 255, 255)
 
     for asteroid in asteroids:
         asteroid.update(delta_time)
         asteroid.draw(screen)
+
+    for bullet in player.bullets:
+        bullet.update(delta_time)
+        bullet.draw(screen)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
