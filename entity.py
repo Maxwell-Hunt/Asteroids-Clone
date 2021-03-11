@@ -6,9 +6,9 @@ class Entity:
 
     def __init__(self, position_x : float, position_y : float):
         self.position = pygame.Vector2(position_x, position_y)
-        self.rotation = 30
+        self.rotation = 0
 
-    def get_transformed_points(self) -> tuple:
+    def get_transformed_points(self) -> Tuple(Tuple(float)):
         transformed_points = []
         for point in self.points:
             new_x = point.x * cos(radians(self.rotation)) - point.y * sin(radians(self.rotation))
@@ -18,7 +18,7 @@ class Entity:
             transformed_points.append((new_x, new_y))
         return tuple(transformed_points)
 
-    def get_bounds(self) -> tuple:
+    def get_bounds(self) -> Tuple(float):
         top = inf
         left = inf
         right = -inf
@@ -41,64 +41,9 @@ class Entity:
         if bottom < 0:
             self.position.y = SCREEN_HEIGHT + self.position.y - top
 
-    def update(self, delta_time):
+    def update(self, delta_time : float):
         pass
 
     def draw(self, screen : pygame.Surface):
         transformed_points = self.get_transformed_points()
         pygame.draw.polygon(screen, self.colour, transformed_points, 3)
-
-
-class Player(Entity):
-
-    max_speed = 0.5
-    points = [pygame.Vector2(20, 0), pygame.Vector2(-20, -10), pygame.Vector2(-20, 10)]
-
-    def __init__(self, position_x : float, position_y : float):
-        super().__init__(position_x, position_y)
-        self.velocity = pygame.Vector2(0, 0)
-
-    def move(self, delta_time : float):
-        pressed = pygame.key.get_pressed()
-        if pressed[pygame.K_w]:
-            self.velocity.x += cos(radians(self.rotation)) * 0.001
-            self.velocity.y += sin(radians(self.rotation)) * 0.001
-        else:
-            self.velocity *= 0.99
-        if pressed[pygame.K_RIGHT]:
-            self.rotation += 0.5 * delta_time
-        if pressed[pygame.K_LEFT]:
-            self.rotation -= 0.5 * delta_time
-
-    
-
-
-    def update(self, delta_time : float):
-        self.move(delta_time)
-        if self.velocity.magnitude() > self.max_speed:
-            self.velocity = self.velocity.normalize()
-            self.velocity *= self.max_speed
-
-        self.position += self.velocity * delta_time
-        self.screen_wrap()
-
-
-class Asteroid(Entity):
-
-    speed = 0.25
-    radius_variation = 0.4
-
-    def __init__(self, position_x : float, position_y : float, radius : float):
-        super().__init__(position_x, position_y)
-        self.velocity = pygame.Vector2(random() * 2 - 1, random() * 2 - 1).normalize() * self.speed
-        self.num_sides = randint(7, 12)
-        self.radius = radius
-        self.points = []
-        for i in range(self.num_sides):
-            angle = i * (360 / self.num_sides)
-            rv = random() * self.radius_variation * 2 - self.radius_variation
-            self.points.append(pygame.Vector2(cos(radians(angle)), sin(radians(angle))) * radius * (1 + rv))
-            
-    def update(self, delta_time : float):
-        self.position += self.velocity * delta_time
-        self.screen_wrap()
