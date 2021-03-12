@@ -6,7 +6,6 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 is_running = True
 previous_time = pygame.time.get_ticks()
 current_time = previous_time
-
 current_interface = Splash()
 while is_running:
     current_time = pygame.time.get_ticks()

@@ -8,12 +8,12 @@ class Game:
 
     def __init__(self):
         self.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        self.asteroids = [Asteroid(random() * SCREEN_WIDTH, random() * SCREEN_HEIGHT, Asteroid.largest_radius) for _ in range(self.num_asteroids)]
+        self.asteroids = [Asteroid(SCREEN_WIDTH * choice([0, 1]), SCREEN_HEIGHT * choice([0, 1]), Asteroid.largest_radius) for _ in range(self.num_asteroids)]
         self.score = 0
 
     def update(self, delta_time : float) -> int:
 
-        if random() < Asteroid.spawn_chance * 0.01:
+        if random() < Asteroid.spawn_chance * 0.01 or len(self.asteroids) < self.num_asteroids:
             self.asteroids.append(Asteroid(SCREEN_WIDTH * choice([0, 1]), SCREEN_HEIGHT * choice([0, 1]), Asteroid.largest_radius))
 
         self.player.update(delta_time)
