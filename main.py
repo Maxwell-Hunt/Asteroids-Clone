@@ -7,12 +7,26 @@ is_running = True
 previous_time = pygame.time.get_ticks()
 current_time = previous_time
 current_interface = Splash()
+
+
+def adjust_volume():
+    global game_volume
+    pressed = pygame.key.get_pressed()
+    if pressed[pygame.K_LEFT]:
+        game_volume *= 0.99
+    if pressed[pygame.K_RIGHT]:
+        game_volume *= 1.01
+    GAME_MUSIC.set_volume(game_volume)
+    GAME_OVER_SOUND.set_volume(game_volume)
+    EXPLOSION_SOUND.set_volume(game_volume * 2)
+
 while is_running:
     current_time = pygame.time.get_ticks()
     delta_time = current_time - previous_time
     previous_time = current_time
     screen.fill((0, 0, 0))
 
+    adjust_volume()
     response = current_interface.update(delta_time)
     if isinstance(current_interface, Splash):
         if response == 1:

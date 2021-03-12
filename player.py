@@ -41,9 +41,9 @@ class Player(Entity):
         else:
             self.velocity *= 0.99
             self.is_accelerating = False
-        if pressed[pygame.K_RIGHT] or pressed[pygame.K_d]:
+        if pressed[pygame.K_d]:
             self.rotation += 0.5 * delta_time
-        if pressed[pygame.K_LEFT] or pressed[pygame.K_a]:
+        if pressed[pygame.K_a]:
             self.rotation -= 0.5 * delta_time
 
     def shoot(self):

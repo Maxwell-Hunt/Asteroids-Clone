@@ -5,6 +5,7 @@ class Splash:
     def __init__(self):
         self.title_text = "Asteroids"
         self.instruction_text = "Press Space To Play"
+        GAME_MUSIC.play(-1)
 
     def update(self, delta_time : float) -> int:
         pressed = pygame.key.get_pressed()
@@ -24,6 +25,8 @@ class GameOver:
     def __init__(self, score):
         self.creation_time = pygame.time.get_ticks()
         self.score = score
+        GAME_MUSIC.stop()
+        GAME_OVER_SOUND.play()
 
     def update(self, delta_time : float) -> int:
         if pygame.time.get_ticks() - self.creation_time > self.duration_time * 1000:

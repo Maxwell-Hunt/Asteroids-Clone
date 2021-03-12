@@ -5,7 +5,7 @@ class Asteroid(Entity):
 
     speed = 0.25
     radius_variation = 0.2
-    spawn_chance = 0.05
+    spawn_chance = 0.005
     largest_radius = 50
     smallest_radius = 25
 

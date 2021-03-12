@@ -28,6 +28,7 @@ class Game:
                         self.asteroids.append(Asteroid(asteroid.position.x, asteroid.position.y, asteroid.radius / 2))
                     else:
                         self.score += 1
+                    EXPLOSION_SOUND.play()
                     self.asteroids.remove(asteroid)
                     self.player.bullets.remove(bullet)
 
