@@ -5,6 +5,9 @@ class Asteroid(Entity):
 
     speed = 0.25
     radius_variation = 0.2
+    spawn_chance = 0.05
+    largest_radius = 50
+    smallest_radius = 25
 
     def __init__(self, position_x : float, position_y : float, radius : float):
         super().__init__(position_x, position_y)
