@@ -1,16 +1,20 @@
 from setup import *
+from asteroid import Asteroid
 
 class Splash:
 
     def __init__(self):
         self.title_text = "Asteroids"
         self.instruction_text = "Press Space To Play"
+        self.asteroids = [Asteroid(SCREEN_WIDTH * random(), SCREEN_HEIGHT * random(), Asteroid.largest_radius) for _ in range(15)]
         GAME_MUSIC.play(-1)
 
     def update(self, delta_time : float) -> int:
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_SPACE]:
             return 1
+        for asteroid in self.asteroids:
+            asteroid.update(delta_time)
 
     def draw(self, screen : pygame.Surface):
         text_surface = TITLE_FONT.render(self.title_text, True, (255, 255, 255))
@@ -19,6 +23,9 @@ class Splash:
         if pygame.time.get_ticks()//500 % 2 == 0:
             text_surface = SMALL_FONT.render(self.instruction_text, True, (255, 255, 255))
             screen.blit(text_surface, (SCREEN_WIDTH/2 - text_surface.get_width()/2, SCREEN_HEIGHT*0.8))
+
+        for asteroid in self.asteroids:
+            asteroid.draw(screen)
 
 class GameOver:
     duration_time = 5
