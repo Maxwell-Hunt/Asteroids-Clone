@@ -8,7 +8,6 @@ previous_time = pygame.time.get_ticks()
 current_time = previous_time
 current_interface = Splash()
 
-
 def adjust_volume():
     global game_volume
     pressed = pygame.key.get_pressed()

@@ -25,8 +25,17 @@ class GameOver:
     def __init__(self, score):
         self.creation_time = pygame.time.get_ticks()
         self.score = score
+        self.high_score = score
         GAME_MUSIC.stop()
         GAME_OVER_SOUND.play()
+
+        with open("highscore.txt", "r") as f:
+            hs = int(f.read())
+            if hs > self.high_score:
+                self.high_score = hs
+        with open("highscore.txt", "w") as f:
+            f.write(str(self.high_score))
+
 
     def update(self, delta_time : float) -> int:
         if pygame.time.get_ticks() - self.creation_time > self.duration_time * 1000:
@@ -37,4 +46,7 @@ class GameOver:
         second_line = DEFAULT_FONT.render(f"{self.score} Asteroids!", True, (255, 255, 255))
         screen.blit(first_line, (SCREEN_WIDTH/2 - first_line.get_width()/2, SCREEN_HEIGHT*0.25))
         screen.blit(second_line, (SCREEN_WIDTH/2 - second_line.get_width()/2, SCREEN_HEIGHT*0.35))
+
+        third_line = SMALL_FONT.render(f"HIGH SCORE: {self.high_score}", True, (255, 255, 255))
+        screen.blit(third_line, (SCREEN_WIDTH/2 - third_line.get_width()/2, SCREEN_HEIGHT*0.5))
 
