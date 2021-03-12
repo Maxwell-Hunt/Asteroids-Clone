@@ -9,7 +9,7 @@ class Asteroid(Entity):
     def __init__(self, position_x : float, position_y : float, radius : float):
         super().__init__(position_x, position_y)
         self.velocity = pygame.Vector2(random() * 2 - 1, random() * 2 - 1).normalize() * self.speed
-        self.num_sides = randint(10, 15)
+        self.num_sides = 12
         self.radius = radius
         self.points = []
         for i in range(self.num_sides):

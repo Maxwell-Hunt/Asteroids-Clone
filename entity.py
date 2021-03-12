@@ -58,7 +58,7 @@ class Entity:
                 point2 = pygame.Vector2(vertices[i-1][0], vertices[i-1][1])
 
                 edge = point2 - point1
-                normal = pygame.Vector2(-edge.y, edge.x).normalize()
+                normal = pygame.Vector2(-edge.y, edge.x)
                 axes.append(normal)
 
         for axis in axes:
