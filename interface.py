@@ -12,6 +12,7 @@ class Splash:
     def update(self, delta_time : float) -> int:
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_SPACE]:
+            SELECT_SOUND.play()
             return 1
         for asteroid in self.asteroids:
             asteroid.update(delta_time)
