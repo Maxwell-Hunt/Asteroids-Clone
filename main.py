@@ -11,7 +11,7 @@ current_interface = Splash()
 def adjust_volume():
     global game_volume
     pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_LEFT]
+    if pressed[pygame.K_LEFT]:
         game_volume *= 0.99
     if pressed[pygame.K_RIGHT] and game_volume < 1:
         game_volume *= 1.01
