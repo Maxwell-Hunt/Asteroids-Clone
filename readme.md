@@ -2,8 +2,9 @@
 
 ## Screenshots:
 
-[!Spash](https://i.postimg.cc/W3CzWcF6/splash.jpg)
-[!Game](https://i.postimg.cc/hGCfmdKY/game.png)
+[![splash.jpg](https://i.postimg.cc/W3CzWcF6/splash.jpg)](https://postimg.cc/ZBPJngLC)
+
+[![game.png](https://i.postimg.cc/hGCfmdKY/game.png)](https://postimg.cc/DWXvkmJQ)
 
 ## Controls:
 
