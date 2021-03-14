@@ -11,10 +11,15 @@ current_interface = Splash()
 def adjust_volume():
     global game_volume
     pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_LEFT]:
+    if pressed[pygame.K_LEFT]
         game_volume *= 0.99
-    if pressed[pygame.K_RIGHT]:
+    if pressed[pygame.K_RIGHT] and game_volume < 1:
         game_volume *= 1.01
+    hs = None
+    with open("data.txt", "r") as f:
+        hs = int(f.read().split()[0])
+    with open("data.txt", "w") as f:
+        f.write(f"{hs} {game_volume}")
     GAME_MUSIC.set_volume(game_volume)
     GAME_OVER_SOUND.set_volume(game_volume)
     EXPLOSION_SOUND.set_volume(game_volume * 2)

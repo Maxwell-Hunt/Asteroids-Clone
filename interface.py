@@ -37,12 +37,12 @@ class GameOver:
         GAME_MUSIC.stop()
         GAME_OVER_SOUND.play()
 
-        with open("highscore.txt", "r") as f:
-            hs = int(f.read())
+        with open("data.txt", "r") as f:
+            hs = int(f.read().split()[0])
             if hs > self.high_score:
                 self.high_score = hs
-        with open("highscore.txt", "w") as f:
-            f.write(str(self.high_score))
+        with open("data.txt", "w") as f:
+            f.write(f"{self.high_score} {game_volume}")
 
 
     def update(self, delta_time : float) -> int:
