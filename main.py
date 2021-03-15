@@ -1,6 +1,6 @@
 from setup import *
 from game import Game 
-from interface import Splash, GameOver
+from interface import Splash, GameOver, Options
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 is_running = True
@@ -24,6 +24,8 @@ def adjust_volume():
     GAME_OVER_SOUND.set_volume(game_volume)
     EXPLOSION_SOUND.set_volume(game_volume * 2)
 
+number_asteroids = 5
+
 while is_running:
     current_time = pygame.time.get_ticks()
     delta_time = current_time - previous_time
@@ -34,13 +36,24 @@ while is_running:
     response = current_interface.update(delta_time)
     if isinstance(current_interface, Splash):
         if response == 1:
-            current_interface = Game() 
+            current_interface = Game(number_asteroids) 
+        elif response == 2:
+            current_interface = Options()
     elif isinstance(current_interface, Game):
         if response == 1:
             current_interface = GameOver(current_interface.score)
     elif isinstance(current_interface, GameOver):
         if response == 1:
             current_interface = Splash()
+    elif isinstance(current_interface, Options):
+        if response != None:
+            if response == 0:
+                number_asteroids = 5
+            elif response == 1:
+                number_asteroids = 10
+            elif response == 2:
+                number_asteroids = 15
+            current_interface = Splash(play_music = False)
 
     current_interface.draw(screen)
     for event in pygame.event.get():

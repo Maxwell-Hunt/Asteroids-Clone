@@ -1,32 +1,66 @@
 from setup import *
 from asteroid import Asteroid
+from interface_elements import TickList
 
 class Splash:
 
-    def __init__(self):
+    def __init__(self, play_music = True):
         self.title_text = "Asteroids"
         self.instruction_text = "Press Space To Play"
+        self.options_instructions = "Press O For Options"
         self.asteroids = [Asteroid(SCREEN_WIDTH * random(), SCREEN_HEIGHT * random(), Asteroid.largest_radius) for _ in range(15)]
-        GAME_MUSIC.play(-1)
+        if play_music:
+            GAME_MUSIC.play(-1)
 
     def update(self, delta_time : float) -> int:
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_SPACE]:
             SELECT_SOUND.play()
             return 1
+        elif pressed[pygame.K_o]:
+            SELECT_SOUND.play()
+            return 2
         for asteroid in self.asteroids:
             asteroid.update(delta_time)
 
     def draw(self, screen : pygame.Surface):
-        text_surface = TITLE_FONT.render(self.title_text, True, (255, 255, 255))
-        screen.blit(text_surface, (SCREEN_WIDTH/2 - text_surface.get_width()/2, SCREEN_HEIGHT*0.25))
+        title_surface = TITLE_FONT.render(self.title_text, True, (255, 255, 255))
+        screen.blit(title_surface, (SCREEN_WIDTH/2 - title_surface.get_width()/2, SCREEN_HEIGHT*0.25))
 
         if pygame.time.get_ticks()//500 % 2 == 0:
             text_surface = SMALL_FONT.render(self.instruction_text, True, (255, 255, 255))
             screen.blit(text_surface, (SCREEN_WIDTH/2 - text_surface.get_width()/2, SCREEN_HEIGHT*0.8))
 
+        text_surface = TINY_FONT.render(self.options_instructions, True, (255, 255, 255))
+        screen.blit(text_surface, (SCREEN_WIDTH/2 - text_surface.get_width()/2, SCREEN_HEIGHT*0.7))
+
         for asteroid in self.asteroids:
             asteroid.draw(screen)
+
+class Options:
+
+    x_offset = 200
+
+    def __init__(self):
+        self.difficulties = ["Easy", "Medium", "Hard"]
+        self.difficulty_selector = TickList(150, 250, self.difficulties)
+    
+    def update(self, delta_time : float) -> int:
+        self.difficulty_selector.update(delta_time)
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_ESCAPE]:
+            SELECT_SOUND.play()
+            return self.difficulty_selector.selected
+
+    def draw(self, screen : pygame.Surface):
+        subtitle1 = SMALL_FONT.render("Difficulty", True, (255, 255, 255))
+        screen.blit(subtitle1, (self.x_offset - subtitle1.get_width()/2, SCREEN_HEIGHT*0.15))
+        self.difficulty_selector.draw(screen)
+
+        instruction = TINY_FONT.render("Press ESC To Exit", True, (255, 255, 255))
+        screen.blit(instruction, ((SCREEN_WIDTH - instruction.get_width()) / 2, SCREEN_HEIGHT * 0.9))
+
+
 
 class GameOver:
     duration_time = 5

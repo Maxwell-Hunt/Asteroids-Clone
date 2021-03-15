@@ -4,16 +4,15 @@ from asteroid import Asteroid
 
 class Game:
 
-    num_asteroids = 5
-
-    def __init__(self):
+    def __init__(self, number_asteroids):
         self.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        self.asteroids = [Asteroid(SCREEN_WIDTH * choice([0, 1]), SCREEN_HEIGHT * choice([0, 1]), Asteroid.largest_radius) for _ in range(self.num_asteroids)]
+        self.asteroids = [Asteroid(SCREEN_WIDTH * choice([0, 1]), SCREEN_HEIGHT * choice([0, 1]), Asteroid.largest_radius) for _ in range(number_asteroids)]
         self.score = 0
+        self.number_asteroids = number_asteroids
 
     def update(self, delta_time : float) -> int:
 
-        if random() < Asteroid.spawn_chance * 0.01 or len(self.asteroids) < self.num_asteroids:
+        if random() < Asteroid.spawn_chance * 0.01 or len(self.asteroids) < self.number_asteroids:
             self.asteroids.append(Asteroid(SCREEN_WIDTH * choice([0, 1]), SCREEN_HEIGHT * choice([0, 1]), Asteroid.largest_radius))
 
         self.player.update(delta_time)

@@ -1,5 +1,5 @@
 import pygame
-from math import sin, cos, radians, inf
+from math import sin, cos, radians, inf, hypot
 from random import random, randint, choice
 
 def Tuple(item = None):
@@ -16,6 +16,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
 TITLE_FONT = pygame.font.Font("font.ttf", 140)
 DEFAULT_FONT = pygame.font.Font("font.ttf", 100)
 SMALL_FONT = pygame.font.Font("font.ttf", 60)
+TINY_FONT = pygame.font.Font("font.ttf", 30)
 
 game_volume = None
 
