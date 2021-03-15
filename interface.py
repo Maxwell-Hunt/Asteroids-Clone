@@ -63,7 +63,9 @@ class Options:
 
 
 class GameOver:
-    duration_time = 5
+
+    duration_time = 4
+
     def __init__(self, score):
         self.creation_time = pygame.time.get_ticks()
         self.score = score
