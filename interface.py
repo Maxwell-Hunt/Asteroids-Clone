@@ -41,9 +41,9 @@ class Options:
 
     x_offset = 200
 
-    def __init__(self):
+    def __init__(self, difficulty):
         self.difficulties = ["Easy", "Medium", "Hard"]
-        self.difficulty_selector = TickList(150, 250, self.difficulties)
+        self.difficulty_selector = TickList(150, 250, self.difficulties, selected = difficulty)
     
     def update(self, delta_time : float) -> int:
         self.difficulty_selector.update(delta_time)

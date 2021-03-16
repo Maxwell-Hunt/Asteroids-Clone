@@ -33,7 +33,7 @@ class Manager:
             if response == 1:
                 self.current_interface = Game(self.number_asteroids) 
             elif response == 2:
-                self.current_interface = Options()
+                self.current_interface = Options(self.number_asteroids / 5 - 1)
 
         elif isinstance(self.current_interface, Game):
             if response == 1:

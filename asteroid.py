@@ -17,7 +17,7 @@ class Asteroid(Entity):
         self.points = []
         for i in range(self.num_sides):
             angle = i * (360 / self.num_sides)
-            rv = random() * self.radius_variation * 2 - self.radius_variation
+            rv = self.radius_variation * (random() * 2 - 1)
             self.points.append(pygame.Vector2(cos(radians(angle)), sin(radians(angle))) * radius * (1 + rv))
             
     def update(self, delta_time : float):
